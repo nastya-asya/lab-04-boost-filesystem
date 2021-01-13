@@ -1,3 +1,29 @@
-// Copyright 2020 Your Name <your_email>
+// Copyright 2020 Anastasiya Smirnova nastya.asya08@yandex.ru
 
 #include <header.hpp>
+
+int main(int argc, char *argv[]) {
+  path ftp_path;
+  if (argc < 2)
+    ftp_path = "../";
+  else
+    ftp_path = string(argv[1]);
+  if (out.is_open()) {
+    if (is_directory(ftp_path)) {
+      fillup(ftp_path);
+      out << "\n\tOverall:\n";
+      if (!brokers.empty()) {
+        for_each(brokers.begin(), brokers.end(), [](auto &i) {
+          for (const auto &j : i.second)
+            out << "broker: " << i.first << " account: " << j.first
+                << " files: " << j.second.second
+                << " lastdate: " << j.second.first << endl;
+        });
+      } else
+        cout << endl << "Empty!" << endl;
+    }
+  }
+  brokers.clear();
+  out.clear();
+  return 0;
+}
